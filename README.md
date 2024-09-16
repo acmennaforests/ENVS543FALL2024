@@ -15,3 +15,5 @@ Additionally here are some changes that I am adding from RStudio
 I am not sure what else to add at this moment, other than the fact that I will be using this repository to analyze data for my non-thesis master's project
 
 This is not working lol
+
+Note to self, there is some lag
