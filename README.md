@@ -8,3 +8,4 @@ going through all the presentations from Dr. Dyer's Canvas website
 
 But also reading R for Data Science to give myself a second source to look to.
 
+Anyways, this repo will be utilized for the whole semester, hopefully I'll have some cool forest data on here
