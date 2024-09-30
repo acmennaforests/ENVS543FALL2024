@@ -17,3 +17,10 @@ I am not sure what else to add at this moment, other than the fact that I will b
 This is not working lol
 
 Note to self, there is some lag
+
+
+
+
+## Homework
+
+- [Summary Taular Data](https://acmennaforests.github.io/ENVS543FALL2024/Homework10.01.24.html)
