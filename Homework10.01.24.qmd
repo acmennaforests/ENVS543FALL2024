@@ -25,7 +25,8 @@ disturbed <- read.csv(file1)
 
 ```{r}
 data1 <- disturbed[ c(56,15,104)]
-summary(data1)
+summary(data1) 
+
 ```
 
 
@@ -33,7 +34,7 @@ summary(data1)
 
 ```{r}
 disturbed |>
-  reframe(`Year` = TIMESTAMP, `Air Temperature (degrees C)`= TA_F  , `Sunlight (umolphoton/m^2/s)`= PPFD_IN, `Net Ecosystem Exchange (gC/m^2/yr)`= NEE_CUT_REF ) -> disttable
+  reframe(`Year` = TIMESTAMP, `Air Temperature (degrees C)`= TA_F  , `Sunlight (umolphoton/m^2/s)`= PPFD_IN, `Net Ecosystem Exchange (gC/m^2/yr`= NEE_CUT_REF ) -> disttable
 ```
 
 
@@ -44,5 +45,6 @@ The table below represents the
 disttable |>
   kable(digits = 1, caption ="Climate and Ecosystem Variables in Disturbed Forest") -> finaltable1
   finaltable1 |>
-    kable_styling()
+    kable_styling() -> distable2
+  distable2
 ```
