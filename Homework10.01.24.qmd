@@ -33,8 +33,7 @@ summary(data1)
 
 ```{r}
 disturbed |>
-  group_by(TIMESTAMP)|>
-  summarise(`Air Temperature`= TA_F  , `Sunlight`= PPFD_IN, `Net Ecosystem Exchange`= NEE_CUT_REF ) -> disttable
+  reframe(`Year` = TIMESTAMP, `Air Temperature (degrees C)`= TA_F  , `Sunlight (umolphoton/m^2/s)`= PPFD_IN, `Net Ecosystem Exchange (gC/m^2/yr)`= NEE_CUT_REF ) -> disttable
 ```
 
 
