@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -64,12 +98,55 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="abstract" class="level2">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<p>Ameriflux FASET data</p>
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
+<p>1a. imported csv file for US-UMd and read it</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>file1 <span class="ot">&lt;-</span><span class="st">"docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>disturbed <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>1b.imported csv filed for US-UMB and read it</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file2 <span class="ot">&lt;-</span> <span class="st">"docs/AMF_US-UMB_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>control <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>2a. Specified which column numbers I’ll be looking at (interested in the following variables: NEE_CUT_REF, TA_F and PPFD_IN)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> disturbed[ <span class="fu">c</span>(<span class="dv">56</span>,<span class="dv">15</span>,<span class="dv">104</span>)]</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    PPFD_IN           TA_F        NEE_CUT_REF     
+ Min.   :298.2   Min.   :5.306   Min.   :-1105.9  
+ 1st Qu.:307.1   1st Qu.:6.510   1st Qu.: -473.0  
+ Median :320.6   Median :7.383   Median : -371.7  
+ Mean   :368.8   Mean   :7.252   Mean   : -428.0  
+ 3rd Qu.:360.0   3rd Qu.:7.959   3rd Qu.: -320.5  
+ Max.   :553.4   Max.   :8.923   Max.   : -244.9  
+ NA's   :2                                        </code></pre>
+</div>
+</div>
+<p>2b. Did the same for the control</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span>control[<span class="fu">c</span>(<span class="dv">56</span>,<span class="dv">15</span>,<span class="dv">120</span>)]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    PPFD_IN           TA_F        NEE_CUT_REF    
+ Min.   :300.0   Min.   :5.488   Min.   :-345.6  
+ 1st Qu.:321.0   1st Qu.:6.550   1st Qu.:-298.7  
+ Median :350.2   Median :7.287   Median :-267.0  
+ Mean   :365.3   Mean   :7.272   Mean   :-274.1  
+ 3rd Qu.:407.5   3rd Qu.:7.871   3rd Qu.:-248.4  
+ Max.   :455.5   Max.   :9.143   Max.   :-195.0  </code></pre>
+</div>
+</div>
+<ol start="3" type="1">
+<li></li>
+</ol>
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>

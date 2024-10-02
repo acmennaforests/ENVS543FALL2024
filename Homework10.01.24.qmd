@@ -3,40 +3,42 @@ title: "Summary Tabular Data Homework"
 format: html
 editor: visual
 
-#refer to ReadMeAmerifluxdata txt file
-#refer to Rodney Dyer's Tidyverse powerpoint
 ---
 
 ## Abstract
 Ameriflux FASET data
 
 ## Introduction
-Ameriflux flux towers are widespread in all the United States. They are eddy covariance towers
-Below, data from FASET (Forest Accelerated Succession ExperimenT) up in Michigan at the University of Michigan Biological Station is being summarized.
-The background to FASET is that it is a 
+
 
 ## Methods
 
-1. imported csv files and read them
+1a. imported csv file for US-UMd and read it
 ```{r}
-file <-"docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"
-ameriflux <- read_csv(file)
-names(ameriflux)
+file1 <-"docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"
+disturbed <- read.csv(file1)
 ```
 
-2. Specified which column numbers I'll be looking at (interested in the following variables:NEE_CUT_REF, TA_F and PPFD_IN)
+1b.imported csv filed for US-UMB and read it
 ```{r}
-hw2data <- ameriflux[ c(56,15,104)]
-summary(hw2data)
+file2 <- "docs/AMF_US-UMB_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"
+control <- read.csv(file2)
+
 ```
 
-3. Need to cut out the -9999.0 values because they are not actual readings
+2a. Specified which column numbers I'll be looking at (interested in the following variables: NEE_CUT_REF, TA_F and PPFD_IN)
 ```{r}
-ameriflux [ c(56,15,104)] |> 
-  filter( PPFD_IN > -9999.0 ) -> newtable
-summary(newtable)
+data1 <- disturbed[ c(56,15,104)]
+summary(data1)
 ```
 
-4. Because Ameriflux data is mostly already processed, I think all I need to do is to 
+2b. Did the same for the control
+
+```{r}
+data2 <-control[c(56,15,120)]
+summary(data2)
+```
+
+3.
 
 ## Results
