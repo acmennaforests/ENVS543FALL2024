@@ -2,25 +2,41 @@
 title: "Summary Tabular Data Homework"
 format: html
 editor: visual
+
+#refer to ReadMeAmerifluxdata txt file
+#refer to Rodney Dyer's Tidyverse powerpoint
 ---
 
-## Quarto
+## Abstract
+Ameriflux FASET data
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+## Introduction
+Ameriflux flux towers are widespread in all the United States. They are eddy covariance towers
+Below, data from FASET (Forest Accelerated Succession ExperimenT) up in Michigan at the University of Michigan Biological Station is being summarized.
+The background to FASET is that it is a 
 
-## Running Code
+## Methods
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
+1. imported csv files and read them
 ```{r}
-1 + 3
+file <-"docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"
+ameriflux <- read_csv(file)
+names(ameriflux)
 ```
 
-You can add options to executable code like this
-
+2. Specified which column numbers I'll be looking at (interested in the following variables:NEE_CUT_REF, TA_F and PPFD_IN)
 ```{r}
-#| echo: false
-2 * 2
+hw2data <- ameriflux[ c(56,15,104)]
+summary(hw2data)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+3. Need to cut out the -9999.0 values because they are not actual readings
+```{r}
+ameriflux [ c(56,15,104)] |> 
+  filter( PPFD_IN > -9999.0 ) -> newtable
+summary(newtable)
+```
+
+4. Because Ameriflux data is mostly already processed, I think all I need to do is to 
+
+## Results
