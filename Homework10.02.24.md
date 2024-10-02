@@ -1,3 +1,52 @@
 ## Homework
 
 - [Summary Tabular Data](https://acmennaforests.github.io/ENVS543FALL2024/Homework10.01.24.html)
+
+---
+title: "Summary Tabular Data Homework"
+format: html
+editor: visual
+
+---
+
+## Abstract
+Ameriflux FASET data
+
+## Introduction
+
+
+## Methods
+
+1. imported csv file for US-UMd and read it
+
+```{r}
+file1 <-"docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"
+disturbed <- read.csv(file1)
+```
+
+
+2. Specified column numbers (interested in the following variables: NEE_CUT_REF, TA_F and PPFD_IN). Also any -9999.0 values were manually changed to NA.
+
+```{r}
+data1 <- disturbed[ c(56,15,104)]
+summary(data1)
+```
+
+
+3.Specified variables are put into a table by year (TIMESTAMP variable)
+
+```{r}
+disturbed |>
+  reframe(`Year` = TIMESTAMP, `Air Temperature (degrees C)`= TA_F  , `Sunlight (umolphoton/m^2/s)`= PPFD_IN, `Net Ecosystem Exchange (gC/m^2/yr`= NEE_CUT_REF ) -> disttable
+```
+
+
+## Results
+The table below represents the 
+
+```{r}
+disttable |>
+  kable(digits = 1, caption ="Climate and Ecosystem Variables in Disturbed Forest") -> finaltable1
+  finaltable1 |>
+    kable_styling()
+```
