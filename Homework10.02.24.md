@@ -1,20 +1,8 @@
 ## Homework
 
 - [Summary Tabular Data](https://acmennaforests.github.io/ENVS543FALL2024/Homework10.01.24.html)
-
 ---
-title: "Summary Tabular Data Homework"
-format: html
-editor: visual
-
----
-
----
-title: "Summary Tabular Data Homework"
-format: html
-editor: visual
-
----
+## "Summary Tabular Data Homework"
 
 ## Abstract
 Specific climatic variables were selected from an Ameriflux (US-UMd) dataset from a disturbed forest in Upper Lower Michigan. Variables were chosen and utilized based on their direct effect on temporal stability of NEE. Variables were then filtered and tabulated utilizing the reframe() function. Functions from knitr library, kable() and kable_styling() were utilized to tabulate the three variables in an organized fashion. On an ecological note, after disturbance in 2008, NEE fell and then climbed back up 2010-2021.
