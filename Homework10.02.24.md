@@ -48,5 +48,6 @@ The table below represents the
 disttable |>
   kable(digits = 1, caption ="Climate and Ecosystem Variables in Disturbed Forest") -> finaltable1
   finaltable1 |>
-    kable_styling()
+    kable_styling() <- distable2
+distable2
 ```
