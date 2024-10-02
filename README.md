@@ -23,4 +23,4 @@ Note to self, there is some lag
 
 ## Homework
 
-- [Summary Taular Data](https://acmennaforests.github.io/ENVS543FALL2024/Homework10.01.24.html)
+- [Summary Tabular Data](https://acmennaforests.github.io/ENVS543FALL2024/Homework10.01.24.qmd)
