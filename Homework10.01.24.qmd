@@ -21,7 +21,12 @@ The purpose of this specific exercise was to tabulate the yearly NEE, Sunlight a
 1.  Imported csv file for US-UMd and read it with the read.csv() function.
 
 ```{r}
-file1 <-"docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"
+library(lubridate)
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+
+file1 <-"~/Desktop/VCU_MS_Biology:Forest_Ecology/ENVS_543/ENVS543FALL2024/docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"
 disturbed <- read.csv(file1)
 ```
 
@@ -37,7 +42,7 @@ print(data1)
 
 ```{r}
 disturbed |>
-  reframe(`Year` = TIMESTAMP, `Air Temperature (degrees C)`= TA_F  , `Sunlight (umolphoton/m^2/s)`= PPFD_IN, `Net Ecosystem Exchange (gC/m^2/yr`= NEE_CUT_REF ) -> disttable
+  summarize(`Year` = TIMESTAMP, `Air Temperature (degrees C)`= TA_F  , `Sunlight (umolphoton/m^2/s)`= PPFD_IN, `Net Ecosystem Exchange (gC/m^2/yr`= NEE_CUT_REF ) -> disttable
 disttable
 ```
 
