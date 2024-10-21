@@ -1,0 +1,52 @@
+---
+title: "Graphics"
+format: html
+editor: visual
+---
+
+## Graphics
+
+This assignment asks for graphics in classic plotting and ggplot2 of the following information
+
+1.  Total Rain for Each Weekday in January.  
+
+2.  Average daily temperature for weekdays in February.
+
+3.  Water depth on Valentine's Day.
+
+4.  Scatter plot of Daily Total Rain and Daily Median Temperature grouped by month (label the centroid of months).
+
+5.  Wind Direction during the week containing the 8th of January.
+
+## Running Code
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+
+#install the libraries needed to plot and graph the above info
+
+```
+
+Now let's get to the graphing component:
+
+1.  graphing for the total rain for each weekday in January (requires a line graph)
+
+```{r}
+
+#classic graphing
+get_rice_data()
+
+
+#ggplot2
+
+
+
+```
+
+2.  graphing for average daily temperature for weekdays in February
+
+```{r}
+
+```
