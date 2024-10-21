@@ -1,0 +1,17 @@
+---
+title: "Function Assignment"
+format: html
+editor: visual
+---
+
+## Function Assignment
+
+This is the function, called get_rice_data(), it is in the file get_rice_data.R, sourced below
+
+## Running Code
+
+```{r}
+source("get_rice_data.R")
+get_rice_data()
+
+```
