@@ -67,6 +67,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="Homework10.01.24_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Homework10.01.24_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="Homework10.01.24_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="Homework10.01.24_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="Homework10.01.24_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
 
 </head>
@@ -98,27 +100,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="abstract" class="level2">
 <h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
-<p>Ameriflux FASET data</p>
+<p>Specific climatic variables were selected from an Ameriflux (US-UMd) dataset from a disturbed forest in Upper Lower Michigan. Variables were chosen and utilized based on their direct effect on temporal stability of NEE (net ecosystem production). Variables were then filtered and tabulated utilizing the reframe() function. Function from knitr library, kable() and kable_styling() were utilized to tabulate the three variables in an organized fashion. On an ecological note, after disturbance NEE fell and then climbed back up.</p>
 </section>
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>FASET (Forest Accelerated Succession ExperimenT) is an ongoing long-term forest disturbance study at UMBS (University of Michigan Biological Station). Since May 2008, more than 3,700 birch and aspen were girdled in a single disturbance event over a three-week period to eventually change the composition of the forest. Many studies have been conducted from this experiment, and flux towers have been established on the control (US-UMB in 1999) and disturbed forests (US-UMd in 2007) of this specific part of the UMBS experimental forest in order to measure carbon fluxes.</p>
+<p>In this particular instance, I am interested in seeing the effect that climate as well as the disturbance itself has on the temporal stability of NEE (Net ecosystem exchange). A few climatic variables have been selected that would affect directly the overall stability of the forest with and without disturbance.</p>
+<p>The purpose of this specific exercise was to tabulate the yearly NEE, Sunlight and Air temperature from the flux tower for the disturbed forest, so that it can be ready to be put into a time series, from which a CV (coefficient of variation) will be calculated.</p>
 </section>
 <section id="methods" class="level2">
 <h2 class="anchored" data-anchor-id="methods">Methods</h2>
-<p>1a. imported csv file for US-UMd and read it</p>
+<ol type="1">
+<li>Imported csv file for US-UMd and read it with the read.csv() function.</li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>file1 <span class="ot">&lt;-</span><span class="st">"docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>disturbed <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'lubridate'</code></pre>
 </div>
-<p>1b.imported csv filed for US-UMB and read it</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>file2 <span class="ot">&lt;-</span> <span class="st">"docs/AMF_US-UMB_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>control <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    date, intersect, setdiff, union</code></pre>
 </div>
-<p>2a. Specified which column numbers I’ll be looking at (interested in the following variables: NEE_CUT_REF, TA_F and PPFD_IN)</p>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr   1.1.4     ✔ readr   2.1.5
+✔ forcats 1.0.0     ✔ stringr 1.5.1
+✔ ggplot2 3.5.1     ✔ tibble  3.2.1
+✔ purrr   1.0.2     ✔ tidyr   1.3.1</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'kableExtra'
+
+The following object is masked from 'package:dplyr':
+
+    group_rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>file1 <span class="ot">&lt;-</span><span class="st">"~/Desktop/VCU_MS_Biology:Forest_Ecology/ENVS_543/ENVS543FALL2024/docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>disturbed <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li>Specified column numbers (interested in the following variables: NEE_CUT_REF, TA_F and PPFD_IN). Also any -9999.0 values were manually changed to NA. Tables were printed</li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> disturbed[ <span class="fu">c</span>(<span class="dv">56</span>,<span class="dv">15</span>,<span class="dv">104</span>)]</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data1 <span class="ot">&lt;-</span> disturbed[ <span class="fu">c</span>(<span class="dv">56</span>,<span class="dv">15</span>,<span class="dv">104</span>)]</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data1) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    PPFD_IN           TA_F        NEE_CUT_REF     
  Min.   :298.2   Min.   :5.306   Min.   :-1105.9  
@@ -129,27 +167,191 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  Max.   :553.4   Max.   :8.923   Max.   : -244.9  
  NA's   :2                                        </code></pre>
 </div>
-</div>
-<p>2b. Did the same for the control</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span>control[<span class="fu">c</span>(<span class="dv">56</span>,<span class="dv">15</span>,<span class="dv">120</span>)]</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(data2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(data1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    PPFD_IN           TA_F        NEE_CUT_REF    
- Min.   :300.0   Min.   :5.488   Min.   :-345.6  
- 1st Qu.:321.0   1st Qu.:6.550   1st Qu.:-298.7  
- Median :350.2   Median :7.287   Median :-267.0  
- Mean   :365.3   Mean   :7.272   Mean   :-274.1  
- 3rd Qu.:407.5   3rd Qu.:7.871   3rd Qu.:-248.4  
- Max.   :455.5   Max.   :9.143   Max.   :-195.0  </code></pre>
+<pre><code>    PPFD_IN  TA_F NEE_CUT_REF
+1        NA 7.721   -1105.880
+2  303.8519 6.557    -364.769
+3  300.6416 6.358    -314.971
+4  307.0903 8.394    -244.897
+5  298.2357 7.431    -325.960
+6  308.3643 8.923    -371.698
+7  320.5641 6.463    -276.572
+8  339.4258 5.306    -289.762
+9  315.2121 7.079    -330.683
+10 326.1256 8.197    -376.155
+11 359.9863 7.383    -497.236
+12 553.4344 6.991    -431.631
+13       NA 6.036    -448.748
+14 525.4672 7.610    -505.056
+15 536.2044 8.335    -536.273</code></pre>
 </div>
 </div>
-<ol start="3" type="1">
-<li></li>
-</ol>
+<p>3.Specified variables are put into a table by year utilizing the reframe() function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>disturbed <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="st">`</span><span class="at">Year</span><span class="st">`</span> <span class="ot">=</span> TIMESTAMP, <span class="st">`</span><span class="at">Air Temperature (degrees C)</span><span class="st">`</span><span class="ot">=</span> TA_F  , <span class="st">`</span><span class="at">Sunlight (umolphoton/m^2/s)</span><span class="st">`</span><span class="ot">=</span> PPFD_IN, <span class="st">`</span><span class="at">Net Ecosystem Exchange (gC/m^2/yr</span><span class="st">`</span><span class="ot">=</span> NEE_CUT_REF ) <span class="ot">-&gt;</span> disttable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+dplyr 1.1.0.
+ℹ Please use `reframe()` instead.
+ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+  always returns an ungrouped data frame and adjust accordingly.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>disttable</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Year Air Temperature (degrees C) Sunlight (umolphoton/m^2/s)
+1  2007                       7.721                          NA
+2  2008                       6.557                    303.8519
+3  2009                       6.358                    300.6416
+4  2010                       8.394                    307.0903
+5  2011                       7.431                    298.2357
+6  2012                       8.923                    308.3643
+7  2013                       6.463                    320.5641
+8  2014                       5.306                    339.4258
+9  2015                       7.079                    315.2121
+10 2016                       8.197                    326.1256
+11 2017                       7.383                    359.9863
+12 2018                       6.991                    553.4344
+13 2019                       6.036                          NA
+14 2020                       7.610                    525.4672
+15 2021                       8.335                    536.2044
+   Net Ecosystem Exchange (gC/m^2/yr
+1                          -1105.880
+2                           -364.769
+3                           -314.971
+4                           -244.897
+5                           -325.960
+6                           -371.698
+7                           -276.572
+8                           -289.762
+9                           -330.683
+10                          -376.155
+11                          -497.236
+12                          -431.631
+13                          -448.748
+14                          -505.056
+15                          -536.273</code></pre>
+</div>
+</div>
 </section>
 <section id="results" class="level2">
 <h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>The table below represents Air temperature, Sunlight and NEE for the FASET forest at the University of Michigan Biological Station from 2007-2021. NA replaced -9999.0 values in the sunlight variable. kable() function and kable_styling() function were utilized to refine the data and represent it in a clean form. It is important to see that NEE after 2008 abruplty decreases and then as the forest recovers from the disturbance, NEE goes back up.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>disttable <span class="sc">|&gt;</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">1</span>, <span class="at">caption =</span><span class="st">"Climate and Ecosystem Variables in Disturbed Forest"</span>) <span class="ot">-&gt;</span> finaltable1</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  finaltable1 <span class="sc">|&gt;</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable_styling</span>() <span class="ot">-&gt;</span> distable2</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  distable2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Climate and Ecosystem Variables in Disturbed Forest</caption>
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Year</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Air Temperature (degrees C)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Sunlight (umolphoton/m^2/s)</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Net Ecosystem Exchange (gC/m^2/yr</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2007</td>
+<td style="text-align: right;">7.7</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-1105.9</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2008</td>
+<td style="text-align: right;">6.6</td>
+<td style="text-align: right;">303.9</td>
+<td style="text-align: right;">-364.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2009</td>
+<td style="text-align: right;">6.4</td>
+<td style="text-align: right;">300.6</td>
+<td style="text-align: right;">-315.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2010</td>
+<td style="text-align: right;">8.4</td>
+<td style="text-align: right;">307.1</td>
+<td style="text-align: right;">-244.9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2011</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">298.2</td>
+<td style="text-align: right;">-326.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">8.9</td>
+<td style="text-align: right;">308.4</td>
+<td style="text-align: right;">-371.7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">6.5</td>
+<td style="text-align: right;">320.6</td>
+<td style="text-align: right;">-276.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2014</td>
+<td style="text-align: right;">5.3</td>
+<td style="text-align: right;">339.4</td>
+<td style="text-align: right;">-289.8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2015</td>
+<td style="text-align: right;">7.1</td>
+<td style="text-align: right;">315.2</td>
+<td style="text-align: right;">-330.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">8.2</td>
+<td style="text-align: right;">326.1</td>
+<td style="text-align: right;">-376.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">7.4</td>
+<td style="text-align: right;">360.0</td>
+<td style="text-align: right;">-497.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2018</td>
+<td style="text-align: right;">7.0</td>
+<td style="text-align: right;">553.4</td>
+<td style="text-align: right;">-431.6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">6.0</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">-448.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">7.6</td>
+<td style="text-align: right;">525.5</td>
+<td style="text-align: right;">-505.1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2021</td>
+<td style="text-align: right;">8.3</td>
+<td style="text-align: right;">536.2</td>
+<td style="text-align: right;">-536.3</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
 </section>
 
 </main>

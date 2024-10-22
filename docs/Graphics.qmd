@@ -36,8 +36,7 @@ Now let's get to the graphing component:
 ```{r}
 
 #classic graphing
-get_rice_data()
-
+get_rice_data()  -> rice
 
 #ggplot2
 
