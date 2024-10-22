@@ -5,25 +5,11 @@ editor: visual
 ---
 
 ## Abstract
-<<<<<<< HEAD
-=======
 
->>>>>>> 7e2890186c0e6f49eba4c251cd9d1e98ec371def
-Specific climatic variables were selected from an Ameriflux (US-UMd) dataset from a disturbed forest in Upper Lower Michigan. Variables were chosen and utilized based on their direct effect on temporal stability of NEE (net ecosystem production). Variables were then filtered and tabulated utilizing the reframe() function. Function from knitr library, kable() and kable_styling() were utilized to tabulate the three variables in an organized fashion. On an ecological note, after disturbance NEE fell and then climbed back up.
+Specific climatic variables were selected from an Ameriflux (US-UMd) dataset from a disturbed forest in Upper Lower Michigan. Variables were chosen and utilized based on their direct effect on temporal stability of NEE. Variables were then filtered and tabulated utilizing the reframe() function. Functions from knitr library, kable() and kable_styling() were utilized to tabulate the three variables in an organized fashion. On an ecological note, after disturbance in 2008, NEE fell and then climbed back up 2010-2021.
 
 ## Introduction
 
-<<<<<<< HEAD
-FASET (Forest Accelerated Succession ExperimenT) is an ongoing long-term forest disturbance study at UMBS (University of Michigan Biological Station). Since May 2008, more than 3,700 birch and aspen were girdled in a single disturbance event over a three-week period to eventually change the composition of the forest. Many studies have been conducted from this experiment, and flux towers have been established on the control (US-UMB in 1999) and disturbed forests (US-UMd in 2007) of this specific part of the UMBS experimental forest in order to measure carbon fluxes. 
-
-In this particular instance, I am interested in seeing the effect that climate as well as the disturbance itself has on the temporal stability of NEE (Net ecosystem exchange). A few climatic variables have been selected that would affect directly the overall stability of the forest with and without disturbance.
-
-The purpose of this specific exercise was to tabulate the yearly NEE, Sunlight and Air temperature from the flux tower for the disturbed forest, so that it can be ready to be put into a time series, from which a CV (coefficient of variation) will be calculated. 
-
-## Methods
-
-1. Imported csv file for US-UMd and read it with the read.csv() function.
-=======
 FASET (Forest Accelerated Succession ExperimenT) is an ongoing long-term forest disturbance study at UMBS (University of Michigan Biological Station). Since May 2008, more than 3,700 birch and aspen were girdled in a single disturbance event over a three-week period to eventually change the composition of the forest. Many studies have been conducted from this experiment, and flux towers have been established on the control (US-UMB in 1999) and disturbed forests (US-UMd in 2007) of this specific part of the UMBS experimental forest in order to measure carbon fluxes.
 
 In this particular instance, I am interested in seeing the effect that climate as well as the disturbance itself has on the temporal stability of NEE (Net ecosystem exchange). A few climatic variables have been selected that would affect directly the overall stability of the forest with and without disturbance.
@@ -33,24 +19,13 @@ The purpose of this specific exercise was to tabulate the yearly NEE, Sunlight a
 ## Methods
 
 1.  Imported csv file for US-UMd and read it with the read.csv() function.
->>>>>>> 7e2890186c0e6f49eba4c251cd9d1e98ec371def
 
 ```{r}
-library(lubridate)
-library(tidyverse)
-library(knitr)
-library(kableExtra)
-
-file1 <-"~/Desktop/VCU_MS_Biology:Forest_Ecology/ENVS_543/ENVS543FALL2024/docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"
-disturbed <- read.csv(file1)
+file1 <-"VCUMSBiology:ForestEcology/ENVS543/ENVS543FALL2024/docs/AMF_US-UMd_FLUXNET_FULLSET_YY_2007-2021_3-5.csv"
+disturbed <- read_csv(file1)
 ```
 
-<<<<<<< HEAD
-
-2. Specified column numbers (interested in the following variables: NEE_CUT_REF, TA_F and PPFD_IN). Also any -9999.0 values were manually changed to NA. Tables were printed
-=======
 2.  Specified column numbers (interested in the following variables: NEE_CUT_REF, TA_F and PPFD_IN). Also any -9999.0 values were manually changed to NA. Tables were printed
->>>>>>> 7e2890186c0e6f49eba4c251cd9d1e98ec371def
 
 ```{r}
 data1 <- disturbed[ c(56,15,104)]
@@ -58,31 +33,20 @@ summary(data1)
 print(data1)
 ```
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 7e2890186c0e6f49eba4c251cd9d1e98ec371def
 3.Specified variables are put into a table by year utilizing the reframe() function.
 
 ```{r}
 disturbed |>
-<<<<<<< HEAD
-  reframe(`Year` = TIMESTAMP, `Air Temperature (degrees C)`= TA_F  , `Sunlight (umolphoton/m^2/s)`= PPFD_IN, `Net Ecosystem Exchange (gC/m^2/yr`= NEE_CUT_REF ) -> disttable
-=======
-  summarize(`Year` = TIMESTAMP, `Air Temperature (degrees C)`= TA_F  , `Sunlight (umolphoton/m^2/s)`= PPFD_IN, `Net Ecosystem Exchange (gC/m^2/yr`= NEE_CUT_REF ) -> disttable
->>>>>>> 7e2890186c0e6f49eba4c251cd9d1e98ec371def
-disttable
+  reframe(`Year` = TIMESTAMP, `Air Temperature (degrees C)`= TA_F  , `Sunlight (umolphoton/m^2/s)`= PPFD_IN, `Net Ecosystem Exchange (gC/m^2/yr)`= NEE_CUT_REF ) -> distable
+distable
 ```
 
 ## Results
-<<<<<<< HEAD
-=======
 
->>>>>>> 7e2890186c0e6f49eba4c251cd9d1e98ec371def
-The table below represents Air temperature, Sunlight and NEE for the FASET forest at the University of Michigan Biological Station from 2007-2021. NA replaced -9999.0 values in the sunlight variable. kable() function and kable_styling() function were utilized to refine the data and represent it in a clean form. It is important to see that NEE after 2008 abruplty decreases and then as the forest recovers from the disturbance, NEE goes back up.
+The table below represents Air temperature, Sunlight and NEE for the FASET forest at the University of Michigan Biological Station from 2007-2021. NA replaced -9999.0 values in the sunlight variable. kable() function and kable_styling() function were utilized to refine the data and represent it in a clean form. It is important to see that NEE abruptly decreases and then as the forest recovers from the disturbance, NEE goes back up.
 
 ```{r}
-disttable |>
+distable |>
   kable(digits = 1, caption ="Climate and Ecosystem Variables in Disturbed Forest") -> finaltable1
   finaltable1 |>
     kable_styling() -> distable2

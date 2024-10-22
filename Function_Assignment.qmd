@@ -12,6 +12,8 @@ This is the function, called get_rice_data(), it is in the file get_rice_data.R,
 
 ```{r}
 source("get_rice_data.R")
+get_rice_data()  -> rice
 
+summary(rice)
 
 ```
