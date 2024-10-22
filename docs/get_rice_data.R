@@ -7,7 +7,6 @@ get_rice_data <- function() {
   library(tidyverse)
   library(lubridate)
   library(dplyr)
-  library(conflicted)
 
   url <- "https://docs.google.com/spreadsheets/d/1Mk1YGH9LqjF7drJE-td1G_JkdADOU0eMlrP01WFBT8s/pub?gid=0&single=true&output=csv"
 
